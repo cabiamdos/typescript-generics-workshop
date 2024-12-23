@@ -14,7 +14,7 @@ interface Source {
   middleName: string;
   lastName: string;
 }
-
+// Aquí también me pierdo. Osea estamos creando una función auxiliar sólo para añadir types?
 /**
  * We've got a problem here. We want to be able to infer the type
  * of the selectors object from what we passed in to makeSelectors.

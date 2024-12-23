@@ -5,7 +5,7 @@ export interface Cache<T> {
   get: (key: string) => T | undefined;
   set: (key: string, value: T) => void;
   // You can fix this by only changing the line below!
-  clone: (transform: (elem: unknown) => unknown) => Cache<unknown>;
+  clone: <U>(transform: (elem: T) => U) => Cache<U>;
 }
 
 const createCache = <T>(initialCache?: Record<string, T>): Cache<T> => {
@@ -26,6 +26,11 @@ const createCache = <T>(initialCache?: Record<string, T>): Cache<T> => {
     },
   };
 };
+const someCache = createCache<number>({'a': 1})
+console.log(someCache.get('a'))
+const sum = (a:number):number => a+2;
+const clonedCache = someCache.clone(sum as any)
+console.log(clonedCache.get('a'))
 
 it("Should let you get and set to/from the cache", () => {
   const cache = createCache<number>();

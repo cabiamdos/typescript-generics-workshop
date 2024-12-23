@@ -12,11 +12,15 @@ import { CSSProperties } from "react";
  *
  * const useStyled = makeUseStyled<MyTheme>();
  */
-const useStyled = <TTheme = {}>(func: (theme: TTheme) => CSSProperties) => {
-  // Imagine that this function hooks into a global theme
-  // and returns the CSSProperties
-  return {} as CSSProperties;
-};
+// INFO: aquí me pierdo
+const makeUsesStyles = <TTheme = {}>()=> {
+  const useStyled = (func: (theme: TTheme) => CSSProperties) => {
+    // Imagine that this function hooks into a global theme
+    // and returns the CSSProperties
+    return {} as CSSProperties;
+  };
+  return useStyled
+}
 
 interface MyTheme {
   color: {
@@ -27,11 +31,13 @@ interface MyTheme {
   };
 }
 
-const buttonStyle = useStyled<MyTheme>((theme) => ({
+export const useStyled = makeUsesStyles<MyTheme>();
+
+const buttonStyle = useStyled((theme) => ({
   color: theme.color.primary,
   fontSize: theme.fontSize.small,
 }));
 
-const divStyle = useStyled<MyTheme>((theme) => ({
+const divStyle = useStyled((theme) => ({
   backgroundColor: theme.color.primary,
 }));

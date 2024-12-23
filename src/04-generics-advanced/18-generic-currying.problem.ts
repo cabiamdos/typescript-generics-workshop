@@ -2,14 +2,14 @@ import { expect, it } from "vitest";
 import { Equal, Expect } from "../helpers/type-utils";
 
 export const curryFunction =
-  <T, U, V>(t: T) =>
-  (u: U) =>
-  (v: V) => {
+  <T>(t: T) =>
+  <U>(u: U) =>
+  <V>(v: V)  => {
     return {
       t,
       u,
       v,
-    };
+    } as {t: T, u: U, v: V};
   };
 
 it("Should return an object which matches the types of each input", () => {
