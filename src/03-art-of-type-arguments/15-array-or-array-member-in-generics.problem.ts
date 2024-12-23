@@ -1,6 +1,9 @@
 import { Equal, Expect } from "../helpers/type-utils";
 
-const makeStatus = <TStatuses extends string[]>(statuses: TStatuses) => {
+// const makeStatus = <TStatuses extends Array<('INFO' | 'DEBUG' | 'ERROR' | 'WARNING')>>(statuses: TStatuses) => {
+//   return statuses;
+// };
+const makeStatus = <TStatus extends string>(statuses: TStatus[]) => {
   return statuses;
 };
 

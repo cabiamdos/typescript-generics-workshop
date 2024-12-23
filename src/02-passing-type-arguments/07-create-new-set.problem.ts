@@ -1,7 +1,7 @@
 import { Equal, Expect } from "../helpers/type-utils";
 
-export const createSet = () => {
-  return new Set();
+export const createSet = <T>():Set<T> => {
+  return new Set<T>();
 };
 
 const stringSet = createSet<string>();
