@@ -5,7 +5,14 @@ import { Equal, Expect } from "../helpers/type-utils";
  * This time, let's try and solve this one
  * with function overloads too!
  */
-export const youSayGoodbyeISayHello = (greeting: "goodbye" | "hello") => {
+// INFO: y parece que no podemos hacerlo con consts como se nos pone la primera función del ejemplo
+// export const youSayGoodbyeISayHello = (greeting:'hello'):'goodbye';
+// export const youSayGoodbyeISayHello = (greeting: "goodbye" | "hello") => {
+//   return greeting === "goodbye" ? "hello" : "goodbye";
+// };
+function youSayGoodbyeISayHello(greeting:'hello'):'goodbye';
+function youSayGoodbyeISayHello(greeting:'goodbye'):'hello';
+function youSayGoodbyeISayHello(greeting: "goodbye" | "hello") {
   return greeting === "goodbye" ? "hello" : "goodbye";
 };
 

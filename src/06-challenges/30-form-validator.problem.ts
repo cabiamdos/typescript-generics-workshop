@@ -1,23 +1,40 @@
 import { expect, it } from "vitest";
 import { Equal, Expect } from "../helpers/type-utils";
 
-const makeFormValidatorFactory = (validators: unknown) => (config: unknown) => {
-  return (values: unknown) => {
-    const errors = {} as any;
+type Validator<TValue> = (value: TValue) => string | undefined;
+type Config<TFields> = {
+  [key in keyof TFields]: Array<keyof typeof validators>;
+};
+type Values<TFields> = {
+  [key in keyof TFields]: any;
+};
+type Errors<TFields> = {
+  [key in keyof TFields]?: string;
+};
+//  esta solución es errónea
+const makeFormValidatorFactory = <TObj extends object>(
+  validators: { [key: string]: Validator<any> } // The set of validators
+) => {
+  return <TFields extends object>(config: Config<TFields>) => {
+    return (values: Values<TFields>): Errors<TFields> => {
+      const errors: Errors<TFields> = {};
 
-    for (const key in config) {
-      for (const validator of config[key]) {
-        const error = validators[validator](values[key]);
-        if (error) {
-          errors[key] = error;
-          break;
+      for (const key in config) {
+        for (const validatorName of config[key]) {
+          const validator = validators[validatorName];
+          const error = validator(values[key as keyof TFields]);
+          if (error) {
+            errors[key as keyof TFields] = error;
+            break; // Stop at the first error for this field
+          }
         }
       }
-    }
 
-    return errors;
+      return errors;
+    };
   };
 };
+
 
 const createFormValidator = makeFormValidatorFactory({
   required: (value) => {

@@ -6,11 +6,14 @@ const obj = {
   c: 3,
 } as const;
 
+type Obj = typeof obj;
 type ObjKey = keyof typeof obj;
 
-const getObjValue = <TKey extends ObjKey>(key: TKey = "a") => {
+function getObjValue(): typeof obj["a"];
+function getObjValue<TKey extends ObjKey>(key: TKey): typeof obj[TKey];
+function getObjValue(key: ObjKey = "a") {
   return obj[key];
-};
+}
 
 const one = getObjValue("a");
 const oneByDefault = getObjValue();
